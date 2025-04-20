@@ -188,7 +188,7 @@ sarah.init("Sarah", 1978);
 console.log(sarah.calcAge());
 */
 //Inheretance between classes: constuctor function
-
+/*
 const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -221,3 +221,87 @@ console.log(mike instanceof Person);
 console.log(mike instanceof Object);
 
 Student.prototype.constructor = Student;
+*/
+//Class inheritance through ES6 classes
+/*
+class Person {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  //Methods added to .prototype property = instances methods
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey, ${this.fullName}`);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(" ")) this._fullName = name;
+    else alert("This is not a full name!");
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  //static method added only on class and not on istances
+  static hey() {
+    console.log("Hey, There!");
+  }
+}
+
+class Student extends Person {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}.`);
+  }
+}
+
+const martha = new Student("Martha Daves", 2012, "Computer Science");
+
+martha.introduce();
+martha.calcAge();
+*/
+
+//Class inheritance through Object.create()
+/*
+const PersonProto = {
+  calcAge() {
+    return 2037 - this.birthYear;
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+const jay = Object.create(StudentProto);
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+
+jay.init("Jay", 2010, "Computer Science");
+jay.introduce();
+console.log(jay.calcAge());
+*/
