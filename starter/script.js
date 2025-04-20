@@ -305,3 +305,81 @@ jay.init("Jay", 2010, "Computer Science");
 jay.introduce();
 console.log(jay.calcAge());
 */
+//Encapsulation: Class fields and methods
+// 1) Public fields
+// 2) Private fields
+// 3) Public methods
+// 4) Private methods
+// Stativ Version of these 4
+
+class Account {
+  //Public fields
+  locale = navigator.language;
+  bank = "Bankist";
+  //Private field
+  #movements = [];
+  #pin;
+
+  constructor(owner, curr, pin) {
+    this.owner = owner;
+    this.curr = curr;
+    this.#pin = pin;
+    // this.movements = [];
+    // this.locale = navigator.language;
+
+    console.log(`Thanks for openning an account, ${this.owner}`);
+  }
+
+  //Public methods
+
+  get movements() {
+    return this.#movements;
+  }
+
+  //Private method
+  #approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved!`);
+    }
+
+    return this;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+    return this;
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  //Static version of them
+  static testPublic() {
+    console.log("Test Public");
+  }
+
+  static #testPrivate() {
+    console.log("Test Public");
+  }
+}
+
+const acc1 = new Account("Marian", "LV", 1111);
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+
+//chaining methods
+acc1
+  .deposit(5000)
+  .withdraw(500)
+  .withdraw(100)
+  .requestLoan(25000)
+  .withdraw(5000);
+console.log(acc1);
